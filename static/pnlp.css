@@ -1,0 +1,142 @@
+
+body {
+    background-color: #353c44;
+    margin: 0;
+    padding: 0;
+    color: black;
+    font-family: "Helvetica", "Sans-Serif";
+}
+
+
+@font-face {
+  font-family: "Oswald";
+  src: url('/static/fonts/Oswald/Oswald.ttf');
+  src: local('Oswald'), url('/static/fonts/Oswald/Oswald.ttf') format("truetype");
+}
+
+#page {
+    max-width: 900px;
+    margin: auto;
+    margin-top: 0;
+    padding: 0;
+}
+
+.mainbox {
+    -moz-box-shadow: 0px 5px 5px #333333;
+    -webkit-box-shadow: 0px 5px 5px #333333;
+    box-shadow: 0px 5px 5px #333333;
+}
+
+#header {
+    margin-top: 15px;
+    position: relative;
+    background-color: white;
+    height: 200px;
+}
+
+a {
+    text-decoration: none;
+    color: #87d16e;
+}
+
+#header h1 {
+    font-size: 3em;
+    font-family: "Oswald";
+    position: absolute;
+    right: 1em;
+}
+
+#header h1 a {
+    color: black;
+}
+
+#page-title h2 {
+    text-transform: uppercase;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+#content {
+    background-color: #ebebeb;
+    padding: 0.5em;
+    margin: auto;
+    min-width: 200px;
+    max-width: 900px;
+}
+
+#header #menu {
+    background-color: #87d16e;
+    color: white;
+    position: absolute;
+    height: 32px;
+    width: 900px;
+    min-height: 32px;
+    bottom: 0;
+    box-shadow: 0px 1px 10px #000000;
+}
+
+#menu a {
+    color: white;
+}
+
+#menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu ul li {
+    display: inline;
+    color: white;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+
+}
+
+#menu ul li:hover {
+    background-color: white;
+    color: black;
+}
+
+#menu ul li:hover a {
+    color: black;
+}
+
+#content {
+    border-bottom: 1px solid #333333;
+}
+
+#footer {
+    margin-top: 15px;
+    text-align: right;
+    padding: 0.2em;
+    font-size: 0.8em;
+}
+
+#footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#footer ul li {
+    display: inline;
+    color: white;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+}
+
+#footer ul li a {
+    color: white;
+}
+
+#footer ul li:hover a {
+    color: #666666;
+}
+
+#content.default {
+    width: 600px;
+    padding-top: 3em;
+}
+
+

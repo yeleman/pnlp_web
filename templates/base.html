@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{% block title %}PNLP{% endblock %} - Routine Paludisme</title>
+    <link rel="stylesheet" media="screen" type="text/css" href="{% url static 'pnlp.css' %}" title="PNLP 2011" />
+</head>
+<body>
+    <div id="page">
+
+        <div id="header" class="mainbox">
+            <h1><a href="{% url index %}">PNLP – Routine Paludisme</a></h1>
+            <div id="breadcrumbs">{%block breadcrumbs %}{% endblock %}</div>
+            <div id="menu">{% include "menu.html" %}</div>
+            <div id="page-title">{%block page-title %}{% endblock %}</div>
+        </div>
+
+        <div id="content" class="mainbox {% block page-name %}default{% endblock %}">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+        </div>
+
+        <div id="footer">
+        <ul id="footer-menu">
+        {% if provider.is_authenticated %}
+        <li><em><a href="{% url logout %}" title="Log out">{{ provider.get_full_name }}</a></em></li>
+        {% else %}
+        <li><a href="{% url login %}" title="Log in">Log in</a></li>
+        {% endif %}
+        <li><a href="{% url profile %}" title="Edit your informations">Infos perso.</a></li>
+        <li><a href="{% url help %}" title="View Help Topics">Help</a></li>
+        <li><a href="{% url support %}" title="Contact Technical Support">Contact</a></li>
+        <li><a href="{% url about %}" title="About this Web Site">About</a></li>
+        </ul>
+        </div>
+    </div>
+</body>
+</html>

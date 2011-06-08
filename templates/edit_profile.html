@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Edit your informations{% endblock %}
+{% block page-title %}{% endblock %}
+
+{% block content %}
+<form method="POST" action="{% url profile %}" name="profile">
+{% csrf_token %}
+<table>
+{{ form.as_table }}
+</table>
+<input type="submit" />
+</form>
+
+<h3>Change your password</h3>
+
+<form method="POST" action="{% url profile %}" name="passwd">
+{% csrf_token %}
+<table>
+{{ passwd_form.as_table }}
+</table>
+<input type="submit" />
+</form>
+{% endblock %}
