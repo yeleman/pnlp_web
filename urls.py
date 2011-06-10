@@ -22,6 +22,9 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'django.contrib.auth.views.logout', \
          {'template_name': 'logout_django.html'}, name='logout'),
 
+    # district
+    url(r'^upload/$', views.upload_form, name='upload'),
+
     # static web pages
      url(r'^support/$', direct_to_template, {'template': 'support.html'}, name='support'),
      url(r'^help/$', direct_to_template, {'template': 'help.html'}, name='help'),

@@ -116,3 +116,59 @@ def edit_profile(request):
     context.update({'form': form, 'passwd_form': passwd_form})
 
     return render_to_response('edit_profile.html', context, RequestContext(request))
+
+
+def handle_uploaded_file(f):
+    fname = '/tmp/form_%s.xls' % datetime.now().strftime('%s')
+    destination = open(fname, 'wb+')
+    for chunk in f.chunks():
+        destination.write(chunk)
+    destination.close()
+    return fname
+
+
+@login_required
+def upload_form(request):
+    context = {}
+    provider = request.user.get_profile()
+
+    if request.method == 'POST':
+        if 'excel_form' in request.FILES:
+            filepath = handle_uploaded_file(request.FILES['excel_form'])
+
+            errors = None
+            status = None
+            instance = None
+
+            from pnlp_core.excel import *
+
+            form = MalariaExcelForm(filepath)
+            if form.is_valid():
+                try:
+                    instance = form.create_report(author=provider)
+                    #status = instance.status
+                    status = 'ok'
+                except IncorrectReportData:
+                    status = 'error'
+            else:
+                print "NOT VALID"
+
+            if form.errors.count() > 0:
+                status = 'error'
+            context.update({'all_errors': form.errors.all(True)})
+
+            """print form
+        #    print form.get('month')
+            #print "\n".join(["%s: %s" % (key, value) for key, value in form.to_dict().items()])
+            print form.to_dict().__len__()
+            print "ERRORS (%d):" % form.errors.count()
+            for section, serrors in errors.items():
+                print("> %s" % section.upper())
+                print("\t" + "\n\t".join([error for error in serrors]))
+                #print "\n".join(form.errors.all())"""
+        else:
+            status = 'nofile'
+
+        context.update({'status': status})
+
+    return render_to_response('upload_form.html', context, RequestContext(request))

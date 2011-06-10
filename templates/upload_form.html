@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load excel %}
+
+{% block title %}Upload an Excel Form{% endblock %}
+{% block page-title %}{% endblock %}
+
+{% block content %}
+<form method="POST" action="{% url upload %}" name="upload" enctype="multipart/form-data">
+{% csrf_token %}
+<p><strong>Warning</strong>: Remember that your excel file contains the <em>code</em> of the CSCom and the reporting period. Make sure it's correct before uploading.</p>
+<label for="excel_form">Upload Your Excel file</label>
+<input id="excel-_form" type="file" name="excel_form" />
+<input type="submit" />
+</form>
+{% if status %}
+    {% if status = 'nofile' %}<p>You must click the <em>Browse...</em> button above and select an Excel form to send.</p>
+    {% endif %}
+    {% if status = 'ok' %}<p>Congratulations!</p>
+        <p>You report form has been received and <strong>accepted</strong>!</p>
+        <p>Your receipt number is <strong>#{{ instance.receipt }}</strong>.</p>
+    {% endif %}
+    {% if status = 'error' %}<p>Error! {{ all_errors|length }} errors detected.</p>
+        <p>Your submited form contains errors and has been <strong>rejected</strong>.</p>
+        <p>Please find bellow a list of detected errors. Fix them and re-submit your file.</p>
+        {% for section, errors in all_errors.items %}
+        <p><strong>{{ section|pnlpcat }}</strong></p>
+        <ul>
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    {% endif %}
+
+{% endif %}
+{% endblock %}
