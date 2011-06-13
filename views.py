@@ -141,14 +141,20 @@ def upload_form(request):
             instance = None
 
             from pnlp_core.excel import *
+            from bolibana_reporting.excel import *
 
             form = MalariaExcelForm(filepath)
             if form.is_valid():
+                print "IS VALID"
                 try:
+                    print "TRY TO CREATE REPORT"
                     instance = form.create_report(author=provider)
+                    context.update({'instance': instance})
+                    print "COULD CREATE."
                     #status = instance.status
                     status = 'ok'
                 except IncorrectReportData:
+                    print "INCORRECT DATA"
                     status = 'error'
             else:
                 print "NOT VALID"
@@ -156,16 +162,8 @@ def upload_form(request):
             if form.errors.count() > 0:
                 status = 'error'
             context.update({'all_errors': form.errors.all(True)})
+            print(form.errors.all(True))
 
-            """print form
-        #    print form.get('month')
-            #print "\n".join(["%s: %s" % (key, value) for key, value in form.to_dict().items()])
-            print form.to_dict().__len__()
-            print "ERRORS (%d):" % form.errors.count()
-            for section, serrors in errors.items():
-                print("> %s" % section.upper())
-                print("\t" + "\n\t".join([error for error in serrors]))
-                #print "\n".join(form.errors.all())"""
         else:
             status = 'nofile'
 
