@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block title %}Edit your informations{% endblock %}
-{% block page-title %}{% endblock %}
+{% block pagetitle %}<h1 class="pagetitle">Mon profil</h1>{% endblock %}
 
 {% block content %}
+<h2>Mes informations personnelles</h2>
 <form method="POST" action="{% url profile %}" name="profile">
 {% csrf_token %}
 <table>
@@ -12,7 +13,7 @@
 <input type="submit" />
 </form>
 
-<h3>Change your password</h3>
+<h2>Changer de mot de passe</h2>
 
 <form method="POST" action="{% url profile %}" name="passwd">
 {% csrf_token %}

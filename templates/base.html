@@ -10,10 +10,23 @@
     <div id="page">
 
         <div id="header" class="mainbox">
-            <h1><a href="{% url index %}">PNLP – Routine Paludisme</a></h1>
+            <h1><a href="{% url index %}">PNLP – Programe National de Lutte contre le Paludisme</a></h1>
+
+            <ul id="user-menu">
+            {% if provider.is_authenticated %}
+            <li><a href="{% url profile %}" title="Edit your informations">{{ provider.get_full_name }}</a></li>
+            <li><em><a href="{% url logout %}" title="Log out">Déconnecter</a></em></li>
+            {% else %}
+            <li><a href="{% url login %}" title="Log in">Log in</a></li>
+            {% endif %}
+            <li><a href="{% url help %}" title="View Help Topics">Help</a></li>
+            <!--
+            <li><a href="{% url support %}" title="Contact Technical Support">Contact</a></li>
+            <li><a href="{% url about %}" title="About this Web Site">About</a></li>-->
+            </ul>
+
             <div id="breadcrumbs">{%block breadcrumbs %}{% endblock %}</div>
             <div id="menu">{% include "menu.html" %}</div>
-            <div id="page-title">{%block page-title %}{% endblock %}</div>
         </div>
 
         <div id="content" class="mainbox {% block page-name %}default{% endblock %}">
@@ -24,21 +37,15 @@
             {% endfor %}
         </ul>
         {% endif %}
+        {% block pagetitle %}{% endblock %}
         {% block content %}
         {% endblock %}
         </div>
 
         <div id="footer">
-        <ul id="footer-menu">
-        {% if provider.is_authenticated %}
-        <li><em><a href="{% url logout %}" title="Log out">{{ provider.get_full_name }}</a></em></li>
-        {% else %}
-        <li><a href="{% url login %}" title="Log in">Log in</a></li>
-        {% endif %}
-        <li><a href="{% url profile %}" title="Edit your informations">Infos perso.</a></li>
-        <li><a href="{% url help %}" title="View Help Topics">Help</a></li>
-        <li><a href="{% url support %}" title="Contact Technical Support">Contact</a></li>
-        <li><a href="{% url about %}" title="About this Web Site">About</a></li>
+        <ul>
+            <li><a href="{% url support %}" title="Contact Us">Contact</a></li>
+            <li><a href="{% url about %}" title="About PNLP">About</a></li>
         </ul>
         </div>
     </div>
