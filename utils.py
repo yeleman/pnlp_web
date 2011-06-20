@@ -4,10 +4,11 @@
 
 from django.contrib.auth.models import ContentType
 
-from bolibana_reporting.models import Access, Role
+from bolibana_auth.models import Access, Role
 
 
 def get_level_for(provider):
+    """ EntityType slug of best (# of descendants) access for a provider """
     # finds best access
     # based on number of descendants
     # in the entities hierarchy

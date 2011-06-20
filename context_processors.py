@@ -6,6 +6,7 @@ from pnlp_web.utils import get_level_for
 
 
 def add_provider(request):
+    """ Add the provider object of logged-in user or None """
     try:
         provider = request.user.get_profile()
     except:
@@ -14,6 +15,7 @@ def add_provider(request):
 
 
 def add_level(request):
+    """ Add level (hierachy slug) of logged-in provider or None """
     try:
         level = get_level_for(request.user.get_profile())
     except:
