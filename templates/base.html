@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -15,12 +16,12 @@
 
             <ul id="user-menu">
             {% if provider.is_authenticated %}
-            <li><a href="{% url profile %}" title="Edit your informations">{{ provider.get_full_name }}</a></li>
-            <li><em><a href="{% url logout %}" title="Log out">Déconnecter</a></em></li>
+            <li><a href="{% url profile %}" title="{% trans 'Edit your informations' %}">{{ provider.get_full_name }}</a></li>
+            <li><em><a href="{% url logout %}" title="{% trans 'Log out' %}">{% trans "Disconnect" %}</a></em></li>
             {% else %}
-            <li><a href="{% url login %}" title="Log in">Log in</a></li>
+            <li><a href="{% url login %}" title="{% trans 'Log in' %}">{% trans "Log in" %}</a></li>
             {% endif %}
-            <li><a href="{% url help %}" title="View Help Topics">Help</a></li>
+            <li><a href="{% url help %}" title="{% trans 'View Help Topics' %}">{% trans "Help" %}</a></li>
             <!--
             <li><a href="{% url support %}" title="Contact Technical Support">Contact</a></li>
             <li><a href="{% url about %}" title="About this Web Site">About</a></li>-->
@@ -45,8 +46,8 @@
 
         <div id="footer">
         <ul>
-            <li><a href="{% url support %}" title="Contact Us">Contact</a></li>
-            <li><a href="{% url about %}" title="About PNLP">About</a></li>
+            <li><a href="{% url support %}" title="{% trans 'Contact Us' %}">{% trans "Contact" %}</a></li>
+            <li><a href="{% url about %}" title="{% trans 'About PNLP' %}">{% trans "About" %}</a></li>
         </ul>
         </div>
     </div>

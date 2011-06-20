@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load excel %}
 
 {% block title %}Upload an Excel Form{% endblock %}
@@ -7,7 +8,7 @@
 {% block content %}
 <form method="POST" action="{% url upload %}" name="upload" enctype="multipart/form-data">
 {% csrf_token %}
-<p><strong>Warning</strong>: Remember that your excel file contains the <em>code</em> of the CSCom and the reporting period. Make sure it's correct before uploading.</p>
+<p><strong>Attention</strong>: Remember that your excel file contains the <em>code</em> of the CSCom and the reporting period. Make sure it's correct before uploading.</p>
 <label for="excel_form">Upload Your Excel file</label>
 <input id="excel-_form" type="file" name="excel_form" />
 <input type="submit" />

@@ -4,6 +4,7 @@
 
 from django import template
 from django.template.defaultfilters import stringfilter
+from django.utils.translation import ugettext as _
 
 register = template.Library()
 
@@ -11,16 +12,17 @@ register = template.Library()
 @register.filter(name='pnlpcat')
 @stringfilter
 def formcategories(value):
+    """ categorie name from category slug """
     value = value.lower()
     if value == 'u5':
-        return u"Children Under 5yo."
+        return _(u"Children Under 5yo.")
     if value == 'o5':
-        return u"Children Over 5yo."
+        return _(u"Children Over 5yo.")
     if value == 'pw':
-        return u"Pregnant Women"
+        return _(u"Pregnant Women")
     if value == 'period':
-        return u"Reporting"
+        return _(u"Reporting")
     if value == 'fillin':
-        return u"Collect / Data Entry"
+        return _(u"Collect / Data Entry")
     if value == 'stockout':
-        return u"Stock outs"
+        return _(u"Stock outs")
