@@ -10,7 +10,7 @@ def add_provider(request):
     try:
         web_provider = request.user.get_profile()
     except:
-        provider = None
+        web_provider = None
     return {'web_provider': web_provider}
 
 
