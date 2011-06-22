@@ -108,6 +108,7 @@ ul#user-menu li:hover a {
 
 
 #content {
+    position: relative;
     padding-left: 36px;
     padding-right: 36px;
     padding-top: 17px;
@@ -181,4 +182,85 @@ h2 {
     color: @text-content-title;
     margin-bottom: 1em;
     margin-top: 1em;
+}
+
+ul#messages {
+    position: absolute;
+    right: 2em;
+    border-radius: .7em;
+    padding: 1em;
+    background-color: @green;
+    opacity: .65;
+    color: @text-content;
+    max-width: 30em;
+    cursor: pointer;
+}
+
+ul#messages li {
+    list-style: square inside;
+}
+
+ul#messages.hidden {
+    display: none;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background: none repeat scroll 0 0 @green;
+    color: @text-table-head;
+    text-transform: uppercase;
+    padding: 8px;
+}
+
+td, th {
+    border-left: 2px solid @background-content;
+    border-right: 2px solid @background-content;
+}
+
+td {
+    padding: 8px;
+}
+
+tr {
+    border-bottom: solid 6px @border-table-nodata;
+}
+
+tr:nth-child(even) td {
+    background-color: @background-table-even;
+}
+
+tr:nth-child(odd) td {
+    background-color: @background-table-odd;
+}
+
+td a, td a:visited, td a:hover, td a:link {
+    color: @text-content;
+}
+
+#content.context #context {
+    background-color: @background-context;
+    padding: 1em;
+}
+
+#content.context th, #content.context td {
+    border-left: 2px solid @background-context;
+    border-right: 2px solid @background-context;
+}
+
+#content.context tr {
+    border-bottom: solid 6px @background-context;
+}
+
+.click {
+    cursor: pointer;
+}
+
+tr:hover td {
+    background-color: @green;
+    //opacity: .6;
 }

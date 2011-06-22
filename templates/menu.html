@@ -1,9 +1,9 @@
-{% if provider.is_authenticated %}
+{% if web_provider.is_authenticated %}
     <ul>
     <li><a href="{% url index %}">Accueil</a></li>
-    {% if level = 'national' %}
-    <li><a href="">Utilisateurs</a></li>
-    <li><a href="">Établissements</a></li>
+    {% if web_provider.main_role.slug == 'antim' %}
+    <li><a href="{% url list_users %}">Utilisateurs</a></li>
+    <li><a href="##">Établissements</a></li>
     {% else %}
 
     {% endif %}

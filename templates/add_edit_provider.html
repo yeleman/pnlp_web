@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "My Profile" %}{% endblock %}
+{% block pagetitle %}<h1 class="pagetitle">{% trans "My Profile" %}</h1>{% endblock %}
+
+{% block content %}
+<h2>{% trans "Edit User Data" %}</h2>
+<form method="POST" action="{% if user_id %}{% url edit_user user_id=user_id %}{% else %}{% url add_user %}{% endif %}" name="profile">
+{% csrf_token %}
+<table>
+{% if user_id %}
+<tr><th>Username</th><td><input type="text" disabled="disabled" value="{{ provider.username }}" /></td></tr>
+{% endif %}
+{{ form.as_table }}
+</table>
+<input type="submit" />
+</form>
+
+{% endblock %}

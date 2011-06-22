@@ -8,10 +8,10 @@ from pnlp_web.utils import get_level_for
 def add_provider(request):
     """ Add the provider object of logged-in user or None """
     try:
-        provider = request.user.get_profile()
+        web_provider = request.user.get_profile()
     except:
         provider = None
-    return {'provider': provider}
+    return {'web_provider': web_provider}
 
 
 def add_level(request):
