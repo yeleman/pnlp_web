@@ -69,6 +69,16 @@ ul#user-menu li:hover a {
     color: @green;
 }
 
+#logo {
+    left: 35px;
+    top: 10px;
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    opacity: .5;
+    cursor: pointer;
+}
+
 #menu {
     background-color: red;
     background-image: url("@{STATIC_IMAGES}/menu_bg.png");
@@ -100,7 +110,7 @@ ul#user-menu li:hover a {
     border-left: none;
 }
 
-#menu ul li:hover {
+#menu ul li:hover, #menu ul li.hover {
     background-image: url("@{STATIC_IMAGES}/menu_selected.png");
     background-position: center top;
     background-repeat: no-repeat;
@@ -189,9 +199,9 @@ ul#messages {
     right: 2em;
     border-radius: .7em;
     padding: 1em;
-    background-color: @green;
+    background-color: @background-menu; //@green;
     opacity: .65;
-    color: @text-content;
+    color: @text-background;
     max-width: 30em;
     cursor: pointer;
 }
@@ -263,4 +273,16 @@ td a, td a:visited, td a:hover, td a:link {
 tr:hover td {
     background-color: @green;
     //opacity: .6;
+}
+
+em {
+    font-style: italic;
+}
+
+strong {
+    font-weight: bold;
+}
+
+.lower {
+    text-transform: lowercase;
 }

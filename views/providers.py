@@ -2,19 +2,39 @@
 # encoding=utf-8
 # maintainer: rgaudin
 
+import logging
+
 from django import forms
 from django.http import Http404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, RequestContext, redirect
 from django.utils.translation import ugettext as _, ugettext_lazy
+from django.views.generic import ListView
 from mptt.fields import TreeNodeChoiceField
 
 from bolibana_auth.models import Role, Provider, Access
 from bolibana_auth.utils import username_from_name, random_password
 from bolibana_reporting.models import Entity
-
 from pnlp_core.utils import send_email, full_url
+
+logger = logging.getLogger(__name__)
+
+
+class ProvidersListView(ListView):
+    """ Generic List View for Providers """
+
+    context_object_name = 'users_list'
+    template_name = 'users_list.html'
+
+    def get_queryset(self):
+        return Provider.objects.order_by('user__first_name', 'user__last_name')
+
+    def get_context_data(self, **kwargs):
+        context = super(ProvidersListView, self).get_context_data(**kwargs)
+        # Add category
+        context['category'] = 'users'
+        return context
 
 
 class EditProviderForm(forms.Form):
@@ -39,13 +59,8 @@ class EditProviderForm(forms.Form):
 
 
 @login_required
-def list_users(request):
-    context = {}
-    return render(request, 'users_list.html', context)
-
-@login_required
 def add_edit_user(request, user_id=None):
-    context = {}
+    context = {'category': 'users'}
     web_provider = request.user.get_profile()
 
     if request.method == 'POST':
@@ -55,7 +70,11 @@ def add_edit_user(request, user_id=None):
 
             # build an Access based on Role and Entity selected
             role = Role.objects.get(slug=form.cleaned_data.get('role'))
-            entity = form.cleaned_data.get('entity')
+            # if a national role, force attachment to root entity
+            if role.slug in ('antim', 'national'):
+                entity = Entity.objects.filter(level=0)[0]
+            else:
+                entity = form.cleaned_data.get('entity')
             access = Access.find_by(role, entity)
 
             if user_id:
@@ -108,7 +127,11 @@ def add_edit_user(request, user_id=None):
                                               "%(pass)s") \
                                             % {'email': provider.email, \
                                                'pass': password})
-                    # log exception: sent_message
+                    # log exception
+                    logger.warning(u"Unable to send email to %(email)s " \
+                                   "with Exception %(e)r" \
+                                   % {'email': provider.email, \
+                                      'e': sent_message})
             # display password if user has no email address
             elif not provider.email:
                 messages.info(request, _(u"Please record and forward the " \
@@ -142,9 +165,76 @@ def add_edit_user(request, user_id=None):
     return render(request, 'add_edit_provider.html', context)
 
 
-def edit_user(request, user_id):
-    return
+@login_required
+def enable_disable_user(request, user_id, activate):
+    """ change user's active satus """
+    try:
+        provider = Provider.objects.get(id=user_id)
+    except Provider.DoesNotExist:
+        raise Http404(_(u"There is no Provider account with ID #%(id)d") \
+                      % {'id': int(user_id)})
+
+    if provider.is_active == activate:
+        messages.warning(request, _(u"Requested status is same " \
+                                    "as current user status."))
+    else:
+        provider.is_active = activate
+        provider.save()
+        messages.warning(request, _(u"%(provider)s status has been " \
+                                    "changed to %(status)s") \
+                                  % {'provider': provider.name(), \
+                                     'status': _(u"active") \
+                                               if provider.is_active \
+                                               else _(u"inactive")})
+    return redirect('edit_user', provider.id)
 
 
-def disable_user(request, user_id):
-    return
+@login_required
+def password_user(request, user_id):
+    """ Generate new password for user """
+    web_provider = request.user.get_profile()
+
+    try:
+        provider = Provider.objects.get(id=user_id)
+    except Provider.DoesNotExist:
+        raise Http404(_(u"There is no Provider account with ID #%(id)d") \
+                      % {'id': int(user_id)})
+
+    # generate and assign password
+    password = random_password()
+    provider.set_password(password)
+    provider.save()
+
+    if provider.email:
+        # send email with password on account creation
+        sent, sent_message = send_email(recipients=provider.email, \
+                                    context={'provider': provider, \
+                                             'creator': web_provider, \
+                                             'password': password, \
+                                             'url': full_url()},
+                                   template='emails/new_password.txt', \
+                         title_template='emails/title.new_password.txt')
+        if sent:
+            messages.success(request, _(u"An e-mail containing the " \
+                                        "password has been sent " \
+                                        "to %(email)s") \
+                                      % {'email': provider.email})
+        else:
+            messages.error(request, _(u"Unable to send e-mail " \
+                                      "to %(email)s. Please record " \
+                                      "and forward the password: " \
+                                      "%(pass)s") \
+                                    % {'email': provider.email, \
+                                       'pass': password})
+            # log exception
+            logger.warning(u"Unable to send email to %(email)s " \
+                           "with Exception %(e)r" \
+                           % {'email': provider.email, \
+                              'e': sent_message})
+    # display password if user has no email address
+    else:
+        messages.info(request, _(u"Please record and forward the " \
+                                 "generated password: %(pass)s") \
+                               % {'pass': password})
+
+    return redirect('edit_user', provider.id)

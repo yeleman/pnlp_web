@@ -1,8 +1,11 @@
 {% if web_provider.is_authenticated %}
     <ul>
-    <li><a href="{% url index %}">Accueil</a></li>
+    <li><a href="#vs">Saisie</a></li>
+    <li><a href="#vs">Validation</a></li>
+    <li><a href="#vs">Données brutes</a></li>
+    <li><a href="#vs">Données analysées</a></li>
     {% if web_provider.main_role.slug == 'antim' %}
-    <li><a href="{% url list_users %}">Utilisateurs</a></li>
+    <li {% if category = 'users' %}class="hover"{% endif %}><a href="{% url list_users %}">Utilisateurs</a></li>
     <li><a href="##">Établissements</a></li>
     {% else %}
 

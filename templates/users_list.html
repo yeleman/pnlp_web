@@ -2,8 +2,8 @@
 {% load i18n %}
 {% load excel %}
 
-{% block title %}{% trans "Users List" %}{% endblock %}
-{% block pagetitle %}<h1 class="pagetitle">{% trans "Users List" %}</h1>{% endblock %}
+{% block title %}Tous les utilisateurs{% endblock %}
+{% block pagetitle %}<h1 class="pagetitle">Liste des utilisateurs</h1>{% endblock %}
 {% block page-name %}default{% endblock %}
 
 {% block jqueryonload %}
@@ -21,9 +21,9 @@ $("tr").each(function () {
 {% block content %}
 <div id="context">
 <table>
-<tr><th>Username</th><th>First Name</th><th>Last Name</th><th>Cell Phone</th><th>Access</th></tr>
+<tr><th>Identifiant</th><th>Prénom</th><th>Nom</th><th>Téléphone</th><th>Accès</th></tr>
 {% for provider in users_list %}
-<tr><td><a href="{% url edit_user user_id=provider.id %}">{{ provider.username }}</a></td><td>{{ provider.first_name }}</td><td>{{ provider.last_name }}</td><td>{{ provider.phone_number }}</td><td>{{ provider.default_access.name }}</td></tr>
+<tr><td><a href="{% url edit_user user_id=provider.id %}">{{ provider.username }}</a></td><td>{{ provider.first_name }}{% if not provider.is_active %}/<accronym title="Ce compte est désactivé">OFF</accronym>{% endif %}</td><td>{{ provider.last_name }}</td><td>{{ provider.phone_number|default:"n/a" }}</td><td>{{ provider.default_access.name }}</td></tr>
 {% endfor %}
 </table>
 </div>

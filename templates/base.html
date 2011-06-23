@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>{% block title %}PNLP{% endblock %} - Routine Paludisme</title>
+    <title>PNLP | {% block title %}Programe National de Lutte conte le Paludisme{% endblock %} - Routine Paludisme</title>
     <link rel="stylesheet" media="screen" type="text/css" href="{% url static 'pnlp.css' %}" title="PNLP 2011" />
     <link rel="shortcut icon" href="{% url static 'images/pnlp_favicon.png' %}" />
     {% block javascript %}
@@ -17,6 +17,9 @@
              //$(this).addClass('hidden');
              $(this).hide("slow");
            });
+           $("#logo").click(function(event) {
+                location.href = '{% url index %}';
+           });
            {% block jqueryonload %}{% endblock %}
          });
     </script>
@@ -25,12 +28,13 @@
     <div id="page">
 
         <div id="header" class="mainbox">
+            <div id="logo"></div>
             <h1><a href="{% url index %}">PNLP – Programe National de Lutte contre le Paludisme</a></h1>
 
             <ul id="user-menu">
             {% if web_provider.is_authenticated %}
             <li><a href="{% url profile %}" title="{% trans 'Edit your informations' %}">{{ web_provider.get_full_name }}</a></li>
-            <li><em><a href="{% url logout %}" title="{% trans 'Log out' %}">{% trans "Disconnect" %}</a></em></li>
+            <li><a href="{% url logout %}" title="{% trans 'Log out' %}">{% trans "Disconnect" %}</a></li>
             {% else %}
             <li><a href="{% url login %}" title="{% trans 'Log in' %}">{% trans "Log in" %}</a></li>
             {% endif %}
@@ -41,7 +45,7 @@
             </ul>
 
             <div id="breadcrumbs">{%block breadcrumbs %}{% endblock %}</div>
-            <div id="menu">{% include "menu.html" %}</div>
+            <div id="menu">{% include "menu.html" with category=category%}</div>
         </div>
 
         <div id="content" class="mainbox {% block page-name %}default{% endblock %}">

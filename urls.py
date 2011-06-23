@@ -7,7 +7,6 @@ import os
 from django.contrib import admin
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
-from django.views.generic import DetailView, ListView
 
 from pnlp_web import views
 from settings import STATIC_ROOT
@@ -31,18 +30,19 @@ urlpatterns = patterns('',
     url(r'^upload/$', views.excel_upload.upload_form, name='upload'),
 
     # ANTIM
-    #url(r'^users/$', views.providers.list_users, name='list_users'),
+    url(r'^users/?$', views.providers.ProvidersListView.as_view(), \
+                      name='list_users'),
     url(r'^users/add$', views.providers.add_edit_user, name='add_user'),
     url(r'^users/edit/(?P<user_id>[0-9]+)$', \
         views.providers.add_edit_user, name='edit_user'),
     url(r'^users/disable/(?P<user_id>[0-9]+)$', \
-        views.providers.disable_user, name='disable_user'),
-
-    url(r'^users/?$', ListView.as_view(
-            queryset=Provider.objects.order_by('user__first_name', \
-                                               'user__last_name'),
-            context_object_name='users_list',
-            template_name='users_list.html'), name='list_users'),
+        views.providers.enable_disable_user, name='disable_user', \
+        kwargs={'activate': False}),
+    url(r'^users/enable/(?P<user_id>[0-9]+)$', \
+        views.providers.enable_disable_user, name='enable_user', \
+        kwargs={'activate': True}),
+    url(r'^users/new_password/(?P<user_id>[0-9]+)$', \
+        views.providers.password_user, name='password_user'),
 
     # static web pages
      url(r'^support/$', direct_to_template, \
