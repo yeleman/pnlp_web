@@ -1,6 +1,6 @@
 {% if web_provider.is_authenticated %}
     <ul>
-    <li><a href="#vs">Saisie</a></li>
+    <li {% if category = 'upload' %}class="hover"{% endif %}><a href="{% url upload %}">Saisie</a></li>
     <li><a href="#vs">Validation</a></li>
     <li><a href="#vs">Données brutes</a></li>
     <li><a href="#vs">Données analysées</a></li>

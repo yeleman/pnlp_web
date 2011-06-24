@@ -23,14 +23,13 @@ def handle_uploaded_file(f):
 
 @login_required
 def upload_form(request):
-    context = {}
+    context = {'category': 'upload'}
     provider = request.user.get_profile()
 
     if request.method == 'POST':
         if 'excel_form' in request.FILES:
             filepath = handle_uploaded_file(request.FILES['excel_form'])
 
-            errors = None
             status = None
             instance = None
 

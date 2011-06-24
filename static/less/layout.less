@@ -161,7 +161,7 @@ h1.pagetitle {
     margin-bottom: 2em;
 }
 
-#content p, h2, form {
+#content p, #content h2, #content h3, #content form, #content ul, #content li {
     margin-left: 30px;
 }
 
@@ -254,7 +254,7 @@ td a, td a:visited, td a:hover, td a:link {
 
 #content.context #context {
     background-color: @background-context;
-    padding: 1em;
+    padding: 1em 0em 1em 0em;
 }
 
 #content.context th, #content.context td {
@@ -285,4 +285,111 @@ strong {
 
 .lower {
     text-transform: lowercase;
+}
+
+
+
+div.fileinputs input#fakefield {
+	margin-left: 8px;
+	margin-top: 6px;
+    padding-top: 3px;
+    padding-left: 6px;
+    border-radius: 1em;
+    background-color: white;
+    border: 1px solid #b8e4a9;
+    height: 16px;
+    color: #2c3238;
+    text-transform: uppercase;
+    font-size: 77%;
+    width: 28.8em;
+    cursor: pointer;
+}
+
+span.button {
+    background-color: transparent;
+    text-transform: uppercase;
+    padding: 0;
+    padding-right: 2px;
+    margin: 0;
+    border: 0;
+    color: @text-background;
+	z-index: 1;
+    display: none;
+    cursor: pointer;
+}
+
+#send {
+    position: absolute;
+    left: 31.5em;
+    top: 0;
+    background-color: @green;
+    text-transform: uppercase;
+    border: 0;
+    color: @text-background;
+    height: 32px;
+    cursor: pointer;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 77%;
+}
+
+div.fileinputs input:focus {
+	background-color: transparent;
+}
+
+div.fileinputs {
+    background-color: @green;
+	position: relative;
+	height: 32px;
+	width: 24em;
+}
+
+input.file {
+	width: 23em;
+    height: 32px;
+	margin: 0;
+    left: .5em;
+}
+
+input.file.hidden {
+	position: relative;
+	opacity: 0;
+	z-index: 2;
+    background-color: red;
+}
+
+div.fakefile {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 24em;
+	padding: 0;
+	margin: 0;
+	z-index: 1;
+	height: 32px;
+}
+
+form {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+strong.bright {
+    color: @green;
+}
+
+#content li {
+    list-style: square inside;
+}
+
+#content a, #content a:link, #content a:hover, #content a:active {
+    color: @green;
+}
+
+h3 {
+    font-size: 108%;
+    color: @text-content;
+    font-weight: bold;
+    margin-bottom: 1em;
+    margin-top: 1em;
 }
